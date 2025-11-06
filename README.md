@@ -59,10 +59,6 @@ To use Mistral's chat models:
 MISTRAL_API_KEY=your-api-key
 ```
 
-
-
-
-
 <!--
 End setup instructions
 -->

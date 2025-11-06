@@ -22,7 +22,8 @@ class Context:
     )
 
     model: Annotated[str, {"__template_metadata__": {"kind": "llm"}}] = field(
-        default="mistralai/codestral-latest",  # "anthropic/claude-3-5-sonnet-20240620",
+        # "mistralai/codestral-latest",  # "anthropic/claude-3-5-sonnet-20240620",
+        default="google_genai/gemini-2.5-flash",
         metadata={
             "description": "The name of the language model to use for the agent's main interactions. "
             "Should be in the form: provider/model-name."
