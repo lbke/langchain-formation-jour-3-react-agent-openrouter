@@ -12,6 +12,8 @@ collection.upsert(
     # Génération d'identifiants uniques pour chaque document
     ids=[d["id"] for d in documents],
     documents=[d["content"] for d in documents],
+    # Metadata can't be nested, they have to be simple key-value pairs
+    metadatas=[{"foo": "bar"}, {"foo": "zed"}]
 )
 
 # Test with

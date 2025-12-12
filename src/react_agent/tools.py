@@ -8,7 +8,7 @@ consider implementing more robust and specialized tools tailored to your needs.
 
 from typing import Any, Callable, List, Optional, cast
 
-from langchain.agents import tool
+from langchain.tools import tool
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langgraph.runtime import get_runtime
 
