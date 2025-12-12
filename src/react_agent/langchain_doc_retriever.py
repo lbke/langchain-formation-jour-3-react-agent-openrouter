@@ -6,6 +6,7 @@ chroma_client = chromadb.Client()
 documents = [
     {"id": "1", "content": "LangChain invokes LLMs"},
     {"id": "2", "content": "LangGraph runs agents"},
+    {"id": "3", "content": "Refuge SPA"},
 ]
 collection = chroma_client.create_collection(name="langchain_documentation")
 collection.upsert(
@@ -13,14 +14,15 @@ collection.upsert(
     ids=[d["id"] for d in documents],
     documents=[d["content"] for d in documents],
     # Metadata can't be nested, they have to be simple key-value pairs
-    metadatas=[{"foo": "bar"}, {"foo": "zed"}]
+    metadatas=[{"foo": "bar"}, {"foo": "zed"}, {"topic": "animals"}],
 )
 
 # Test with
 # python ./src/langchain_doc_retriever.py
 if __name__ == "__main__":
     collection = chroma_client.get_collection(name="langchain_documentation")
-    queries = ["What is LangChain?", "What is LangGraph?"]
+    queries = ["What is LangChain?", "What is LangGraph?",
+               "What's a framework for agentic AI?", "Adopter un chat"]
     for query in queries:
         results = collection.query(
             query_texts=[query],

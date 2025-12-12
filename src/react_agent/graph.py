@@ -39,7 +39,7 @@ async def call_model(
     """
 
     # Initialize the model with tool binding. Change the model or add more tools here.
-    # model = load_chat_model(runtime.context.model).bind_tools(TOOLS)
+    # model = load_chat_model(runtime.context.model)
     model = init_chat_model(
         model="mistralai/devstral-2512:free",
         # OpenRouter utilise le même format d'API qu'OpenAI
@@ -47,8 +47,7 @@ async def call_model(
         model_provider="openai",
         base_url="https://openrouter.ai/api/v1",
         api_key=os.environ["OPENROUTER_API_KEY"],
-
-    )
+    ).bind_tools(TOOLS)
 
     # Format the system prompt. Customize this to change the agent's behavior.
     system_message = runtime.context.system_prompt.format(
