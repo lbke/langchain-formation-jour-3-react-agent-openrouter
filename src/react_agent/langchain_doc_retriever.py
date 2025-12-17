@@ -14,7 +14,9 @@ collection.upsert(
     ids=[d["id"] for d in documents],
     documents=[d["content"] for d in documents],
     # Metadata can't be nested, they have to be simple key-value pairs
-    metadatas=[{"foo": "bar"}, {"foo": "zed"}, {"topic": "animals"}],
+    metadatas=[{"topic": "AI", "foo": "bar"},
+               {"topic": "AI", "foo": "zed"},
+               {"topic": "animals"}],
 )
 
 # Test with

@@ -8,7 +8,7 @@ consider implementing more robust and specialized tools tailored to your needs.
 
 from typing import Any, Callable, List, Optional, cast
 
-from langchain.tools import tool
+from langchain.tools import ToolRuntime, tool
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langgraph.runtime import get_runtime
 
@@ -35,7 +35,10 @@ async def search(query: str) -> Optional[list[dict[str, Any]]]:
 
 @tool
 def search_langchain(
-    query: str
+    query: str,
+    # Special parameter set by LangChain
+    # @see https://docs.langchain.com/oss/python/langchain/tools#accessing-context
+    runtime: ToolRuntime
 ) -> Optional[list[dict[str, Any]]]:
     """Search in LangChain and LangGraph official documentation.
 
@@ -44,10 +47,14 @@ def search_langchain(
     It is is designed to provide comprehensive, accurate, and trusted results. It's particularly useful
     for answering questions about LangChain and LangGraph.
     """
+    # Topic can be retrieved via state
+    topic = runtime.state.get("topic", "AI")
     # result = retriever.invoke(query)
     results = langchain_documents_collection.query(
         query_texts=[query],
-        n_results=1)
+        n_results=3,
+        where={"topic": topic},
+    )
     # Results is a list of lists (many documents for many entry queries)
     # Here we have only one query, so we return the first list
     return results["documents"][0]
