@@ -33,3 +33,12 @@ if __name__ == "__main__":
         print(f"Query: {query}")
         for doc in results['documents'][0]:
             print(f" - Retrieved document: {doc}")
+    # Exemple de filtrage - évite les documents non pertinents
+    results = collection.query(
+        query_texts=[query],
+        n_results=100,
+        where={"topic": "AI"},
+    )
+    print("Filtered results (topic=AI):")
+    for doc in results['documents'][0]:
+        print(f" - Retrieved document: {doc}")

@@ -3,6 +3,7 @@
 Works with a chat model with tool calling support.
 """
 from datetime import datetime, timezone
+from json import tool
 from typing import Dict, List, Literal, cast
 
 from langchain.chat_models import init_chat_model
@@ -19,8 +20,6 @@ from react_agent.tools import TOOLS
 import os
 # Bonus : setting up an anonymizer
 # from react_agent.anonymizer import langsmith_client
-
-# Define the function that calls the model
 
 
 async def call_model(
@@ -41,13 +40,14 @@ async def call_model(
     # Initialize the model with tool binding. Change the model or add more tools here.
     # model = load_chat_model(runtime.context.model)
     model = init_chat_model(
-        model="mistralai/devstral-2512:free",
+        model=runtime.context.model or "mistralai/devstral-2512:free",
         # OpenRouter utilise le même format d'API qu'OpenAI
         # qui est un standard "de fait"
         model_provider="openai",
         base_url="https://openrouter.ai/api/v1",
         api_key=os.environ["OPENROUTER_API_KEY"],
-    ).bind_tools(TOOLS)
+    )
+    model = model.bind_tools(TOOLS)
 
     # Format the system prompt. Customize this to change the agent's behavior.
     system_message = runtime.context.system_prompt.format(

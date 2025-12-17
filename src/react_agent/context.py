@@ -23,9 +23,10 @@ class Context:
 
     model: Annotated[str, {"__template_metadata__": {"kind": "llm"}}] = field(
         # "mistralai/codestral-latest",  # "anthropic/claude-3-5-sonnet-20240620",
-        default="google_genai/gemini-2.5-flash",
+        # Expects an open router model
+        default="mistralai/devstral-2512:free",
         metadata={
-            "description": "The name of the language model to use for the agent's main interactions. "
+            "description": "The name of the OpenRouter language model to use for the agent's main interactions. "
             "Should be in the form: provider/model-name."
         },
     )

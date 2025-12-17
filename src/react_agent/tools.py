@@ -19,6 +19,7 @@ from react_agent.context import Context
 from react_agent.langchain_doc_retriever import collection as langchain_documents_collection
 
 
+@tool
 async def search(query: str) -> Optional[list[dict[str, Any]]]:
     """Search for general web results.
 
@@ -52,7 +53,7 @@ def search_langchain(
     # result = retriever.invoke(query)
     results = langchain_documents_collection.query(
         query_texts=[query],
-        n_results=3,
+        n_results=1,
         where={"topic": topic},
     )
     # Results is a list of lists (many documents for many entry queries)
